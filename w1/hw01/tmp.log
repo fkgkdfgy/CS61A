@@ -1,0 +1,27 @@
+find
+[0mFind files or directories under the given directory tree, recursively.More information: https://manned.org/find.
+
+ - [23;22;24;25;32mFind files by extension:
+[23;22;24;25;33m   find {{root_path}} -name '{{*.ext}}'
+[0m
+ - [23;22;24;25;32mFind files matching multiple path/name patterns:
+[23;22;24;25;33m   find {{root_path}} -path '{{**/path/**/*.ext}}' -or -name '{{*pattern*}}'
+[0m
+ - [23;22;24;25;32mFind directories matching a given name, in case-insensitive mode:
+[23;22;24;25;33m   find {{root_path}} -type d -iname '{{*lib*}}'
+[0m
+ - [23;22;24;25;32mFind files matching a given pattern, excluding specific paths:
+[23;22;24;25;33m   find {{root_path}} -name '{{*.py}}' -not -path '{{*/site-packages/*}}'
+[0m
+ - [23;22;24;25;32mFind files matching a given size range:
+[23;22;24;25;33m   find {{root_path}} -size {{+500k}} -size {{-10M}}
+[0m
+ - [23;22;24;25;32mRun a command for each file (use {} within the command to access the filename):
+[23;22;24;25;33m   find {{root_path}} -name '{{*.ext}}' -exec {{wc -l {} }}\;
+[0m
+ - [23;22;24;25;32mFind files modified in the last 7 days and delete them:
+[23;22;24;25;33m   find {{root_path}} -daystart -mtime -{{7}} -delete
+[0m
+ - [23;22;24;25;32mFind empty (0 byte) files and delete them:
+[23;22;24;25;33m   find {{root_path}} -type {{f}} -empty -delete
+[0m[0m
