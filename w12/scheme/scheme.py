@@ -23,10 +23,12 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     4
     """
     # Evaluate atoms
+    print('DEBUG','value:{0}, type:{1}'.format(expr,type(expr)))
     if scheme_symbolp(expr):
         return env.lookup(expr)
     elif self_evaluating(expr):
         return expr
+    print('DEBUG',"is not a atoms")
 
     # All non-atomic expressions are lists (combinations)
     if not scheme_listp(expr):
@@ -37,7 +39,6 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
-        print('DEBUG',first)
         first = scheme_eval(first,env)
         rest = rest.map(lambda x: scheme_eval(x,env))
         return scheme_apply(first,rest,env)
@@ -258,6 +259,9 @@ def do_define_form(expressions, env):
         validate_form(expressions, 2, 2) # Checks that expressions is a list of length exactly 2
         # BEGIN PROBLEM 5
         "*** YOUR CODE HERE ***"
+        value = scheme_eval(expressions.rest.first,env)
+        env.define(target,value)
+        return target        
         # END PROBLEM 5
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 9
@@ -277,6 +281,9 @@ def do_quote_form(expressions, env):
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    print('DEBUG','value:{}'.format(expressions))
+    return expressions.first
+
     # END PROBLEM 6
 
 def do_begin_form(expressions, env):

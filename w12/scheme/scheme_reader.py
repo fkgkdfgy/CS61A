@@ -142,11 +142,16 @@ def scheme_read(src):
     elif val == "'":
         # BEGIN PROBLEM 6
         "*** YOUR CODE HERE ***"
+        single_line = scheme_read(src)
+        result =  Pair('quote',Pair(single_line, nil))
+        print('DEBUG',"quote expression:{}".format(repr(result)))
+        return result
         # END PROBLEM 6
     elif val not in DELIMITERS:
         return val
     else:
         raise SyntaxError('unexpected token: {0}'.format(val))
+
 def read_tail(src):
     """Return the remainder of a list in SRC, starting before an element or ).
 
@@ -168,6 +173,8 @@ def read_tail(src):
             # BEGIN PROBLEM 1
             "*** YOUR CODE HERE ***"
             if src.current() == "(":
+                first = scheme_read(src)
+            elif src.current() == "'":
                 first = scheme_read(src)
             else:
                 first = src.pop_first()
