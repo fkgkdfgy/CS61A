@@ -45,6 +45,8 @@ class Frame(object):
         """An empty frame with parent frame PARENT (which may be None)."""
         "Your Code Here"
         # Note: you should define instance variables self.parent and self.bindings
+        self.parent = parent
+        self.bindings = {}
 
     def __repr__(self):
         if self.parent is None:
@@ -54,7 +56,7 @@ class Frame(object):
 
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
-
+        
         return 'Your Code Here'
 
     # BEGIN PROBLEM 2/3
@@ -93,8 +95,8 @@ class BuiltinProcedure(Procedure):
         """
         # BEGIN PROBLEM 2
         "*** YOUR CODE HERE ***"
+        
         # END PROBLEM 2
-
 
 class LambdaProcedure(Procedure):
     """A procedure defined by a lambda expression or a define form."""
