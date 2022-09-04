@@ -74,7 +74,13 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 7
-    return scheme_eval(expressions.first, env) # replace this with lines of your own code
+    def eval_all_helper(x):
+        print('DEBUG','value in helper:{}'.format(x))
+        if x != nil:
+            yield scheme_eval(x.first,env)
+            yield from eval_all_helper(x.rest)
+    eval_all_list=list(eval_all_helper(expressions))
+    return eval_all_list[-1] if len(eval_all_list)!=0 else None # replace this with lines of your own code
     # END PROBLEM 7
 
 ################
@@ -310,6 +316,9 @@ def do_lambda_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    param_list=expressions.first
+    body=expressions.rest
+    return LambdaProcedure(param_list,body,env)
     # END PROBLEM 8
 
 def do_if_form(expressions, env):
