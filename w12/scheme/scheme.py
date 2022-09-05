@@ -23,12 +23,10 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     4
     """
     # Evaluate atoms
-    print('DEBUG','value:{0}, type:{1}'.format(expr,type(expr)))
     if scheme_symbolp(expr):
         return env.lookup(expr)
     elif self_evaluating(expr):
         return expr
-    print('DEBUG',"is not a atoms")
 
     # All non-atomic expressions are lists (combinations)
     if not scheme_listp(expr):
@@ -135,6 +133,26 @@ class Frame(object):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 10
         "*** YOUR CODE HERE ***"
+        def param_check(x):
+            if x != nil:
+                if not scheme_symbolp(x.first):
+                    raise SchemeError()
+                param_check(x.rest)
+        param_check(formals)
+        
+        child_frame = Frame(self)
+        def iterative_define(x,y):
+            if x is not nil and y is not nil:
+                child_frame.define(x.first,y.first)
+                iterative_define(x.rest,y.rest)
+            elif x is nil and y is nil:
+                pass
+            else:
+                raise SchemeError('make child frame: different param length')
+        iterative_define(formals,vals)
+        
+        return child_frame
+
         # END PROBLEM 10
 
 ##############
@@ -208,6 +226,7 @@ class LambdaProcedure(Procedure):
         of values, for a lexically-scoped call evaluated in environment ENV."""
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        return self.env.make_child_frame(self.formals,args)
         # END PROBLEM 11
 
     def __str__(self):
@@ -272,6 +291,18 @@ def do_define_form(expressions, env):
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
+        print('DEBUG','param list:{}'.format(target))
+        def param_check(x):
+            if x!=nil:
+                if not scheme_symbolp(x.first):
+                    raise SchemeError("incorrect form for param_list")
+                param_check(x.rest)
+
+        param_check(target) 
+        param_list =target.rest
+        body = expressions.rest
+        env.define(target.first,LambdaProcedure(param_list,body,env))
+        return target.first
         # END PROBLEM 9
     else:
         bad_target = target.first if isinstance(target, Pair) else target
@@ -351,6 +382,18 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    def iterative_and(x):
+        if x == nil:
+            return True
+        else:
+            result = scheme_eval(x.first,env)
+            if result is False or x.rest is nil:
+                return result
+            else:
+                return iterative_and(x.rest)
+
+    tmp = iterative_and(expressions)
+    return tmp
     # END PROBLEM 12
 
 def do_or_form(expressions, env):
@@ -368,6 +411,16 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    def iterative_or(x):
+        if x == nil:
+            return False
+        else:
+            result = scheme_eval(x.first,env)
+            if result is not False or x.rest == nil:
+                return result
+            else:
+                return iterative_or(x.rest)
+    return iterative_or(expressions)
     # END PROBLEM 12
 
 def do_cond_form(expressions, env):
@@ -388,6 +441,10 @@ def do_cond_form(expressions, env):
         if is_true_primitive(test):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
+            if clause.rest is nil:
+                return test
+            else:
+                return eval_all(clause.rest,env)
             # END PROBLEM 13
         expressions = expressions.rest
 
