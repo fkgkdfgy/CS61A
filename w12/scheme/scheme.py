@@ -527,6 +527,47 @@ def do_quasiquote_form(expressions, env):
 def do_unquote(expressions, env):
     raise SchemeError('unquote outside of quasiquote')
 
+def do_enumerate_form(expr, env):
+    
+    if not validate_form(expr,1,1):
+        raise SchemeError('enumerate input expr length is not 1:{}'.format(expr))
+    if not scheme_listp(expr.first):
+        raise SchemeError('enumerate input is not a Pair: {}'.format(expr.first))
+    
+    x = expr.first
+    x = x.map(lambda x: scheme_eval(x,env))
+    while x is not nil:
+        if x is 
+    index_count = lambda x, idx: Pair(Pair(idx,Pair(x.first,nil)),index_count(x.rest,idx+1)) if x!=nil else nil
+    return index_count(expr,0)
+
+def do_merge_form(expr,env):
+    if not validate_form(expr,3,3):
+        raise SchemeError("merge input expr length is not 3:{}".format(expr))
+    list_1 = expr.rest.first
+    list_2 = expr.rest.rest.first
+    operator_fn = expr.first
+    if not scheme_listp(list_1):
+        raise SchemeError("merge input list_1 is not a Pair:{}".format(list_1))
+    if not scheme_listp(list_2):
+        raise SchemeError("merge input list_2 is not a Pair:{}".format(list_2))
+  
+    def iterative_construct(fn,expr_1,expr_2):
+        if expr_1 is nil and expr_2 is nil:
+            return nil
+        elif expr_1 is nil and expr_2 is not nil:
+            return Pair(expr_2.first, iterative_construct(fn,expr_1,expr_2.rest))
+        elif expr_1 is not nil and expr_2 is nil:
+            return Pair(expr_1.first, iterative_construct(fn,expr_1.rest,expr_2))
+        else:
+            tmp_pair=Pair(fn,Pair(expr_1.first,Pair(expr_2.first,nil)))
+            flag = (scheme_eval(tmp_pair,env) is True)
+            new_expr_1 = expr_1.rest if flag else expr_1 
+            new_expr_2 = expr_2 if flag else expr_2.rest
+            new_head = expr_1.first if flag else expr_2.first
+            return Pair(new_head, \
+                        iterative_construct(fn,new_expr_1,new_expr_2)) 
+    return iterative_construct(operator_fn,list_1,list_2) 
 
 SPECIAL_FORMS = {
     'and': do_and_form,
@@ -541,6 +582,8 @@ SPECIAL_FORMS = {
     'define-macro': do_define_macro,
     'quasiquote': do_quasiquote_form,
     'unquote': do_unquote,
+    'enumerate': do_enumerate_form,
+    'merge': do_merge_form,
 }
 
 # Utility methods for checking the structure of Scheme programs
