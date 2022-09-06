@@ -469,6 +469,21 @@ def make_let_frame(bindings, env):
     names, values = nil, nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    to_items = lambda x,fn: nil if x is nil else Pair(fn(x),to_items(x.rest,fn))
+    def condition_check(cond,fn,x):
+        if x!=nil:
+            cond(fn(x))
+            condition_check(cond,fn,x.rest)
+    names = to_items(bindings,lambda x: x.first.first)
+    # CHECK
+    validate_formals(names)
+    condition_check(lambda x: validate_form(x,2,2), \
+                    lambda x: x.first, \
+                    bindings)
+    values = to_items(bindings,lambda x:x.first.rest.first if x.first.rest != nil else nil)
+    print('DEBUG','names:{}'.format(names))
+    print('DEBUG','values:{}'.format(values))
+    values = values.map(lambda x: scheme_eval(x,env))
     # END PROBLEM 14
     return env.make_child_frame(names, values)
 
