@@ -593,8 +593,13 @@ def recursive_pair(expr,env):
         if result.first == "let":
             return transform_let_to_lambda(result,env)
         elif result.first == "lambda":
-            return result
+            body = result.rest.rest.first
+            
+
         else:
+            raise SchemeError("unknown special form for recursive_pair")
+    else:
+        return expr
 
 
 def do_let_to_lambda_form(expr,env):
