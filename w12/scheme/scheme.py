@@ -78,7 +78,15 @@ def eval_all(expressions, env):
             yield scheme_eval(x.first,env)
             yield from eval_all_helper(x.rest)
     eval_all_list=list(eval_all_helper(expressions))
-    return eval_all_list[-1] if len(eval_all_list)!=0 else None # replace this with lines of your own code
+    x = expressions
+    validate_form(x,1)
+    if x.rest is nil:
+        return scheme_eval(x.first,env,True)
+    else:
+        scheme_eval(x.first,env,False)
+        return eval_all(x.rest,env)
+
+    # return eval_all_list[-1] if len(eval_all_list)!=0 else None # replace this with lines of your own code
     # END PROBLEM 7
 
 ################
@@ -363,9 +371,9 @@ def do_if_form(expressions, env):
     """
     validate_form(expressions, 2, 3)
     if is_true_primitive(scheme_eval(expressions.first, env)):
-        return scheme_eval(expressions.rest.first, env)
+        return scheme_eval(expressions.rest.first, env , True)
     elif len(expressions) == 3:
-        return scheme_eval(expressions.rest.rest.first, env)
+        return scheme_eval(expressions.rest.rest.first, env, True)
 
 def do_and_form(expressions, env):
     """Evaluate a (short-circuited) and form.
@@ -537,7 +545,7 @@ def do_enumerate_form(expr, env):
     x = expr.first
     x = x.map(lambda x: scheme_eval(x,env))
     while x is not nil:
-        if x is 
+        pass
     index_count = lambda x, idx: Pair(Pair(idx,Pair(x.first,nil)),index_count(x.rest,idx+1)) if x!=nil else nil
     return index_count(expr,0)
 
@@ -569,6 +577,42 @@ def do_merge_form(expr,env):
                         iterative_construct(fn,new_expr_1,new_expr_2)) 
     return iterative_construct(operator_fn,list_1,list_2) 
 
+def transform_let_to_lambda(expr,env):
+    validate_form(expr,3,3)
+    if expr.first == "let":
+        formal_head = result.rest.first
+        formals = formal_head.map(lambda x: x.first.first)
+        validate_formals(formals)
+        args = formal_head.map(lambda x: x.first.rest.first)
+        return Pair(str(LambdaProcedure(formals,body,env)),args)
+    else:
+        raise SchemeError("input is not a let list")
+
+def recursive_pair(expr,env):
+    if isinstance(result,Pair):
+        if result.first == "let":
+            return transform_let_to_lambda(result,env)
+        elif result.first == "lambda":
+            return result
+        else:
+
+
+def do_let_to_lambda_form(expr,env):
+    validate_form(expr,1,1)
+    print("DEBUG","value in let-to-lambda: {}".format(expr))
+    common_eval = expr
+    head = expr.first
+    if scheme_symbolp(head) or self_evaluating(head):
+        return scheme_eval(head,env)
+    elif head.first == "quote":
+        result = scheme_eval(head,env) 
+        if isinstance(result,Pair) and result.first == "let":
+            return transform_let_to_lambda(result,env)
+        elif isinstance(result,Pair) and result.first == "lambda":
+            return result
+    else:
+        raise SchemeError("something unknown happen in let-to-lambda")
+
 SPECIAL_FORMS = {
     'and': do_and_form,
     'begin': do_begin_form,
@@ -584,6 +628,7 @@ SPECIAL_FORMS = {
     'unquote': do_unquote,
     'enumerate': do_enumerate_form,
     'merge': do_merge_form,
+    'let-to-lambda': do_let_to_lambda_form,
 }
 
 # Utility methods for checking the structure of Scheme programs
@@ -653,6 +698,8 @@ class MuProcedure(Procedure):
 
     # BEGIN PROBLEM 18
     "*** YOUR CODE HERE ***"
+    def make_call_frame(self,args,env):
+        return env.make_child_frame(self.formals,args)
     # END PROBLEM 18
 
     def __str__(self):
@@ -669,6 +716,9 @@ def do_mu_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 18
     "*** YOUR CODE HERE ***"
+    body = expressions.rest
+    return MuProcedure(formals,body) 
+
     # END PROBLEM 18
 
 SPECIAL_FORMS['mu'] = do_mu_form
@@ -741,6 +791,9 @@ def optimize_tail_calls(original_scheme_eval):
         result = Thunk(expr, env)
         # BEGIN PROBLEM 19
         "*** YOUR CODE HERE ***"
+        while isinstance(result,Thunk):
+            result = original_scheme_eval(result.expr, result.env)
+        return result
         # END PROBLEM 19
     return optimized_eval
 
