@@ -584,7 +584,10 @@ def transform_let_to_lambda(expr,env):
         formals = formal_head.map(lambda x: x.first.first)
         validate_formals(formals)
         args = formal_head.map(lambda x: x.first.rest.first)
-        return Pair(str(LambdaProcedure(formals,body,env)),args)
+        body = expr.rest.rest.first
+        new_args = args.map(lambda x: recursive_pair(x.first))
+        new_body = body.map(lambda x: recursive_pair(x.first))
+        return Pair(str(LambdaProcedure(formals,new_body,env)),new_args)
     else:
         raise SchemeError("input is not a let list")
 
@@ -593,9 +596,10 @@ def recursive_pair(expr,env):
         if result.first == "let":
             return transform_let_to_lambda(result,env)
         elif result.first == "lambda":
+            formals = result.rest.first
             body = result.rest.rest.first
-            
-
+            new_body = body.map(lambda x: recursive_pair(x.first))
+            return str(LambdaProcedure(formals,new_body,env))
         else:
             raise SchemeError("unknown special form for recursive_pair")
     else:
