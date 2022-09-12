@@ -88,7 +88,15 @@ class Pair(object):
             return scheme_append(mapped, self.rest.flatmap(fn))
         else:
             raise TypeError('ill-formed list (cdr is a promise)')
+    
+    def next_value(self):
+        if self.next == nil:
+            return None
+        else:
+            return self.rest.next
 
+    def value(self):
+        return self.first
 
 class nil(object):
     """The empty list"""

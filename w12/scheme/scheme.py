@@ -29,6 +29,8 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         return expr
 
     # All non-atomic expressions are lists (combinations)
+    print('DEBUG','input expr:{}'.format(expr))
+
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
     first, rest = expr.first, expr.rest
@@ -38,8 +40,12 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
         first = scheme_eval(first,env)
-        rest = rest.map(lambda x: scheme_eval(x,env))
-        return scheme_apply(first,rest,env)
+        if isinstance(first,MacroProcedure):
+            tmp_lambda = first.apply_macro(rest,env)
+            return scheme_eval(tmp_lambda.body,env)
+        else:
+            args = rest.map(lambda x: scheme_eval(x,env))
+            return scheme_apply(first,args,env)
         # END PROBLEM 4
 
 def self_evaluating(expr):
@@ -53,6 +59,7 @@ def scheme_apply(procedure, args, env):
     if isinstance(procedure, BuiltinProcedure):
         return procedure.apply(args, env)
     else:
+        print('DEBUG','apply procedure body:{}'.format(procedure.body))
         new_env = procedure.make_call_frame(args, env)
         return eval_all(procedure.body, new_env)
 
@@ -72,15 +79,11 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 7
-    def eval_all_helper(x):
-        print('DEBUG','value in helper:{}'.format(x))
-        if x != nil:
-            yield scheme_eval(x.first,env)
-            yield from eval_all_helper(x.rest)
-    eval_all_list=list(eval_all_helper(expressions))
     x = expressions
-    validate_form(x,1)
-    if x.rest is nil:
+    print('DEBUG','evall_all:{}'.format(x))
+    if x is nil:
+        return None
+    elif x.rest is nil:
         return scheme_eval(x.first,env,True)
     else:
         scheme_eval(x.first,env,False)
@@ -248,9 +251,25 @@ class MacroProcedure(LambdaProcedure):
     """A macro: a special form that operates on its unevaluated operands to
     create an expression that is evaluated in place of a call."""
 
+    def extend(self,args):
+        if len(args) != len(self.formals):
+            raise SchemeError("size of args and size of formals are not matched")
+        tmp_dict={}
+        def make_dict(a,b):
+            if a is not nil:
+                tmp_dict[a.first] == b.first
+                make_dict(a.rest,b,rest)
+
+        make_dict(self.formals,args)
+    
+    def make_call_frame(self,args,env):
+        return env.make_child_frame(self.formals,args) 
+
     def apply_macro(self, operands, env):
         """Apply this macro to the operand expressions."""
-        return complete_apply(self, operands, env)
+        body = complete_apply(self, operands, env)
+        return LambdaProcedure(nil,body,env)
+
 
 def add_builtins(frame, funcs_and_names):
     """Enter bindings in FUNCS_AND_NAMES into FRAME, an environment frame,
@@ -390,18 +409,17 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
-    def iterative_and(x):
-        if x == nil:
-            return True
-        else:
-            result = scheme_eval(x.first,env)
-            if result is False or x.rest is nil:
+    x = expressions
+    if x is nil:
+        return True 
+    else:
+        while x.rest is not nil:
+            result = scheme_eval(x.first,env,False)
+            if result is False:
                 return result
-            else:
-                return iterative_and(x.rest)
-
-    tmp = iterative_and(expressions)
-    return tmp
+            x = x.rest
+        result = scheme_eval(x.first,env,True)
+        return result
     # END PROBLEM 12
 
 def do_or_form(expressions, env):
@@ -419,16 +437,17 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
-    def iterative_or(x):
-        if x == nil:
-            return False
-        else:
+    x = expressions
+    if x is nil:
+        return False
+    else:
+        while x.rest is not nil:
             result = scheme_eval(x.first,env)
-            if result is not False or x.rest == nil:
+            if result is not False:
                 return result
-            else:
-                return iterative_or(x.rest)
-    return iterative_or(expressions)
+            x = x.rest
+        result = scheme_eval(x.first,env,True)
+        return result
     # END PROBLEM 12
 
 def do_cond_form(expressions, env):
@@ -496,6 +515,7 @@ def make_let_frame(bindings, env):
     return env.make_child_frame(names, values)
 
 
+
 def do_define_macro(expressions, env):
     """Evaluate a define-macro form.
 
@@ -507,6 +527,16 @@ def do_define_macro(expressions, env):
     """
     # BEGIN Problem 20
     "*** YOUR CODE HERE ***"
+    head = expressions.first
+    validate_form(head,1)
+    validate_form(expressions,2)
+    fn_name = head.first
+    formals = head.rest
+    validate_formals(head)
+    body = expressions.rest
+    fn_lambda = MacroProcedure(formals,body,env)
+    env.define(fn_name,fn_lambda)
+    return fn_name
     # END Problem 20
 
 
@@ -579,32 +609,33 @@ def do_merge_form(expr,env):
 
 def transform_let_to_lambda(expr,env):
     validate_form(expr,3,3)
-    if expr.first == "let":
-        formal_head = result.rest.first
-        formals = formal_head.map(lambda x: x.first.first)
-        validate_formals(formals)
-        args = formal_head.map(lambda x: x.first.rest.first)
-        body = expr.rest.rest.first
-        new_args = args.map(lambda x: recursive_pair(x.first))
-        new_body = body.map(lambda x: recursive_pair(x.first))
-        return Pair(str(LambdaProcedure(formals,new_body,env)),new_args)
-    else:
-        raise SchemeError("input is not a let list")
+    assert expr.first == "let", "input is not a let pair list"
+    formal_head = expr.rest.value()
+    print('DEBUG',formal_head)
+    formals = formal_head.map(lambda x: x.first)
+    validate_formals(formals)
+    args = formal_head.map(lambda x: x.rest.first)
+    body = expr.rest.rest
+    new_args = args.map(lambda x: recursive_pair(x,env))
+    new_body = body.map(lambda x: recursive_pair(x,env))
+    return Pair(str(LambdaProcedure(formals,new_body,env)),new_args)
 
 def recursive_pair(expr,env):
-    if isinstance(result,Pair):
-        if result.first == "let":
-            return transform_let_to_lambda(result,env)
-        elif result.first == "lambda":
-            formals = result.rest.first
-            body = result.rest.rest.first
-            new_body = body.map(lambda x: recursive_pair(x.first))
+    if isinstance(expr,Pair):
+        procedure = expr.value()
+        if procedure == "let":
+            return transform_let_to_lambda(expr,env)
+        elif procedure == "lambda":
+            formals = expr.rest.first
+            body = expr.rest.rest
+            new_body = body.map(lambda x: recursive_pair(x,env))
             return str(LambdaProcedure(formals,new_body,env))
+        elif procedure == "quote":
+            return expr
         else:
-            raise SchemeError("unknown special form for recursive_pair")
+            return expr.map(lambda x : recursive_pair(x,env))
     else:
         return expr
-
 
 def do_let_to_lambda_form(expr,env):
     validate_form(expr,1,1)
@@ -614,11 +645,7 @@ def do_let_to_lambda_form(expr,env):
     if scheme_symbolp(head) or self_evaluating(head):
         return scheme_eval(head,env)
     elif head.first == "quote":
-        result = scheme_eval(head,env) 
-        if isinstance(result,Pair) and result.first == "let":
-            return transform_let_to_lambda(result,env)
-        elif isinstance(result,Pair) and result.first == "lambda":
-            return result
+        return recursive_pair(head.rest.value(),env)
     else:
         raise SchemeError("something unknown happen in let-to-lambda")
 
@@ -638,6 +665,7 @@ SPECIAL_FORMS = {
     'enumerate': do_enumerate_form,
     'merge': do_merge_form,
     'let-to-lambda': do_let_to_lambda_form,
+    'define-macro': do_define_macro,
 }
 
 # Utility methods for checking the structure of Scheme programs
@@ -790,31 +818,37 @@ def complete_apply(procedure, args, env):
 
 def optimize_tail_calls(original_scheme_eval):
     """Return a properly tail recursive version of an eval function."""
+    call_index = 0
     def optimized_eval(expr, env, tail=False):
         """Evaluate Scheme expression EXPR in environment ENV. If TAIL,
         return a Thunk containing an expression for further evaluation.
         """
         if tail and not scheme_symbolp(expr) and not self_evaluating(expr):
             return Thunk(expr, env)
-
+        elif scheme_symbolp(expr) or self_evaluating(expr):
+            return original_scheme_eval(expr,env)
+        
         result = Thunk(expr, env)
+        nonlocal call_index
+        call_index += 1
+        fn_index= call_index
         # BEGIN PROBLEM 19
         "*** YOUR CODE HERE ***"
         while isinstance(result,Thunk):
+            if isinstance(result.expr,Pair):
+               # print('DEBUG','pair expr:{}'.format(result.expr))
+               # print('DEBUG','fn index:{}'.format(fn_index))
+               pass
             result = original_scheme_eval(result.expr, result.env)
         return result
         # END PROBLEM 19
     return optimized_eval
 
-
-
-
-
-
 ################################################################
 # Uncomment the following line to apply tail call optimization #
 ################################################################
-# scheme_eval = optimize_tail_calls(scheme_eval)
+scheme_eval = optimize_tail_calls(scheme_eval)
+
 
 
 
