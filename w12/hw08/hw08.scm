@@ -76,7 +76,7 @@
   (cond ((and (number? base) (= base 0)) 0)
     	((and (number? exponent) (= exponent 0)) 1)
 	((and (number? base) (number? exponent)) (recur_mul base exponent))
-	()
+	((and (number? exponent) (= exponent 1)) base)
 	(else (list '^ base exponent))
     	)
 )
@@ -92,7 +92,8 @@
 (define x^2 (make-exp 'x 2))
 (define x^3 (make-exp 'x 3))
 
-(define (derive-exp exp var)
-  'YOUR-CODE-HERE
+(define (derive-exp expr var)
+  ;'YOUR-CODE-HERE
+   (make-product (second-operand expr) (make-exp (first-operand expr) (- (second-operand expr) 1)))
 )
 
