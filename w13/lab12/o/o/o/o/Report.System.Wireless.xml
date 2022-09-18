@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StringTable>
+	<String ID="wlanAdvisor" loc.comment="Title of Report">Microsoft 无线诊断报告</String>
+	<String ID="configCpu" loc.comment="Columns header for Configuration CPU Table">计算机系统信息</String>
+	<String ID="computerName" loc.comment="Columns header for Configuration CPU Table">计算机</String>
+	<String ID="domainName" loc.comment="Columns header for Configuration CPU Table">域</String>
+	<String ID="numberOfProcessors" loc.comment="Columns header for Configuration CPU Table">处理器</String>
+	<String ID="mhz" loc.comment="Columns header for Configuration CPU Table">CPU 速度(MHz)</String>
+	<String ID="memSize" loc.comment="Columns header for Configuration CPU Table">内存(MB)</String>
+	<String ID="pageSize" loc.comment="Columns header for Configuration CPU Table">页面大小(字节)</String>
+	<String ID="allocationGranularity" loc.comment="Columns header for Configuration CPU Table">分配间距(字节)</String>
+	<String ID="hyperThreaded" loc.comment="Columns header for Configuration CPU Table">超线程</String>
+	<String ID="networkinterface" loc.comment="Header for Network Perfmon Tables">网络接口</String>
+	<String ID="SectionWireless" loc.comment="Section name seen in report">无线网络疑难解答信息</String>
+	<String ID="TableWirelessRegAdapterInfo" loc.comment="Title for Wireless Network Adapter info query results">无线网络适配器</String>
+	<String ID="TableWirelessConfigDataFiles" loc.comment="Title for Wireless Network Config Data Files">无线配置文件</String>
+	<String ID="TableWirelessConnectionAttempts" loc.comment="Title for Wireless Network Connection Attempts table">无线网络连接尝试</String>
+	<String ID="TableWirelessFileVersions" loc.comment="Title for Wireless Network File Versions query results">无线网络系统文件版本</String>
+	<String ID="TableWirelessGPInfoFiles" loc.comment="Title for Wireless Network Group Policy Info Files">无线组策略配置文件</String>
+	<String ID="TableWirelessOSInformation" loc.comment="Title for Operating System query results">操作系统信息</String>
+	<String ID="TableWirelessPowerInformation" loc.comment="Title for Power query results">电源信息</String>
+	<String ID="TableWirelessRegConfig" loc.comment="Title for Wireless Network SSO Info query results">无线网络注册表配置</String>
+	<String ID="TableWirelessServices" loc.comment="Title for Wireless Network Services table">无线网络服务</String>
+	<String ID="TableWirelessServicesInformation" loc.comment="Title for Services query results">系统服务</String>
+	<String ID="TableWirelessSystemInformation" loc.comment="Title for Computer System query results">计算机制造商和型号</String>
+	<String ID="TableWirelessUserInformation" loc.comment="Title for User query results">用户信息</String>
+	<String ID="TableWirelessWLanProcesses" loc.comment="Title for Wireless Network WLan Extension Processes table">WLAN 扩展进程</String>
+	<String ID="TableWirelessTraces" loc.comment="Title for traces results">跟踪</String>
+	<String ID="TableEnvironmentInfo" loc.comment="Title for environment info results">环境信息</String>
+	<String ID="wirelessdriverdesc" loc.comment="Title for Wireless Network Driver Description in Registry Adapter Info table">驱动程序描述</String>
+	<String ID="wirelessnetcfginstanceid" loc.comment="Title for Wireless Network Adapter GUID in Registry Adapater Info table">适配器 GUID</String>
+	<String ID="wirelessmatchingdeviceid" loc.comment="Title for Wireless Network Hardware ID in Registry Adapter Info table">硬件 ID</String>
+	<String ID="wirelessdriverdate" loc.comment="Title for Wireless Network Driver Date in Registry Adapter Info table">驱动程序日期</String>
+	<String ID="wirelessdriverversion" loc.comment="Title for Wireless Network Driver Version in Registry Adapter Info table">驱动程序版本</String>
+	<String ID="wirelessprovidername" loc.comment="Title for Wireless Network Driver Provider in Registry Adapter Info table">驱动程序提供商</String>
+	<String ID="wirelessextensibilitydll" loc.comment="Title for Wireless Network Driver Provider in Registry Adapter Info table">扩展 DLL</String>
+	<String ID="wirelessuiextensibilityclsid" loc.comment="Title for Wireless Network UI Extensibility Class ID in Registry Adapter Info table">UI 扩展类 ID</String>
+	<String ID="wirelessgroupname" loc.comment="Title for Wireless Network Group Name in Registry Adapter Info table">组名</String>
+	<String ID="wirelessdiagnosticsid" loc.comment="Title for Wireless Network Diagnostics ID in Registry Adapter Info table">诊断 ID</String>
+	<String ID="wirelessadapteroui" loc.comment="Title for Wireless Network ApdaterOUI in Registry Adapter Info table">适配器 OUI</String>
+	<String ID="wirelessconnectionid" loc.comment="Title for Wireless Network Connection Attempts table column">连接 ID</String>
+	<String ID="wirelessconnectionssid" loc.comment="Title for Wireless Network Connection Attempts table column">SSID</String>
+	<String ID="wirelessconnectionstep" loc.comment="Title for Wireless Network Connection Attempts table column">连接尝试步骤</String>
+	<String ID="wirelessconnectionstepproperty" loc.comment="Title for Wireless Network Connection Attempts table column">事件属性</String>
+	<String ID="wirelessconnectionstepvalue" loc.comment="Title for Wireless Network Connection Attempts table column">事件属性值</String>
+	<String ID="servicename" loc.comment="Custom Service Table column headers">服务</String>
+	<String ID="displayname" loc.comment="Custom Service Table column headers">名称</String>
+	<String ID="exitcode" loc.comment="Custom Service Table column headers">退出代码</String>
+	<String ID="scname" loc.comment="Custom Service Table column headers">已注册服务名称</String>
+	<String ID="pathname" loc.comment="Custom Service Table column headers">路径</String>
+	<String ID="servicespecificexitcode" loc.comment="Custom Service Table column headers">特定退出代码</String>
+	<String ID="started" loc.comment="Custom Service Table column headers">已启动</String>
+	<String ID="state" loc.comment="Custom Service Table column headers">状态</String>
+	<String ID="filename" loc.comment="Custom File Table column headers">文件名</String>
+	<String ID="tracefile" loc.comment="Custom Trace File Table column headers">跟踪文件</String>
+	<String ID="TopicWirelessSystemState" loc.comment="Title for Wireless Network System State Topic">系统状态</String>
+	<String ID="TopicWirelessSoftware" loc.comment="Title for Wireless Network Software Topic">软件配置</String>
+	<String ID="TopicWirelessHardware" loc.comment="Title for Wireless Network Hardware Topic">硬件配置</String>
+	<String ID="TopicWirelessConfiguration" loc.comment="Title for Wireless Network Configuration Information Topic">无线网络配置</String>
+	<String ID="TopicWirelessTraces" loc.comment="Title for Wireless Network Traces Topic">无线跟踪</String>
+	<String ID="TopicWirelessConnectionAttempts" loc.comment="Title for Wireless Network Connection Attempts Topic">连接尝试</String>
+	<String ID="alltests" loc.comment="Title for Rules Summary Table">基本系统检查</String>
+	<String ID="alltestdesc" loc.comment="Title for Rules Summary Group Description Column">描述</String>
+	<String ID="alltestgroups" loc.comment="Title for Rules Summary Group Name Column">测试</String>
+	<String ID="allteststatus" loc.comment="Title for Rules Summary Group Resuls Column">结果</String>
+	<String ID="allchildfail" loc.comment="Title for Rules Summary Group Child Failed Count Column">已失败</String>
+	<String ID="allchilddesc" loc.comment="Title for Rules Summary Group Child Result Description Column">描述</String>
+	<String ID="allchildtest" loc.comment="Title for Rules Summary Group Child Test Description Column">测试组</String>
+	<String ID="allchildtotal" loc.comment="Title for Rules Summary Group Child Total Test Count Column">测试</String>
+	<String ID="managementObjects" loc.comment="Title for WMI Query Table">WMI</String>
+	<String ID="managementObjectsProperty" loc.comment="Title for WMI Query Property">属性</String>
+	<String ID="managementObjectsQuery" loc.comment="Title for WMI Query">查询</String>
+	<String ID="managementObjectsRelativePath" loc.comment="Title for WMI Query Returned Objects">返回的对象</String>
+	<String ID="managementObjectsResult" loc.comment="Title for WMI Query Result">查询结果</String>
+	<String ID="managementObjectsValue" loc.comment="Title for WMI Query Value">值</String>
+	<String ID="configurationFiles" loc.comment="Title for Configuration Log Files">日志文件</String>
+	<String ID="configurationFilesQuery" loc.comment="Title for Configuration Files Requested">请求的文件</String>
+	<String ID="configurationFilesOpenResult" loc.comment="Title for Configuration File Lookup Request Result">结果</String>
+	<String ID="configurationFilesFrom" loc.comment="Title for Configuration File Original Location">原始位置</String>
+	<String ID="configurationFilesTo" loc.comment="Title for Configuration File Current Location">当前位置</String>
+	<String ID="configurationFilesCopyResult" loc.comment="Title for Configuration File Copy Result">结果</String>
+	<String ID="wlansvcstart" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务启动</String>
+	<String ID="wlansvcconnectstart" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务启动连接</String>
+	<String ID="wlansvcconnection" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务连接</String>
+	<String ID="interfaceguid" loc.comment="Column Header for Wireless Auto Configuration Events Table">界面 GUID</String>
+	<String ID="interfacedescription" loc.comment="Column Header for Wireless Auto Configuration Events Table">界面描述</String>
+	<String ID="connectionmode" loc.comment="Column Header for Wireless Auto Configuration Events Table">连接模式</String>
+	<String ID="profilename" loc.comment="Column Header for Wireless Auto Configuration Events Table">配置文件名</String>
+	<String ID="ssid" loc.comment="Column Header for Wireless Auto Configuration Events Table">SSID</String>
+	<String ID="bsstype" loc.comment="Column Header for Wireless Auto Configuration Events Table">BSS 类型</String>
+	<String ID="bssid" loc.comment="Column Header for Wireless Auto Configuration Events Table">BSS ID</String>
+	<String ID="phytype" loc.comment="Column Header for Wireless Auto Configuration Events Table">PHY 类型</String>
+	<String ID="authenticationalgorithm" loc.comment="Column Header for Wireless Auto Configuration Events Table">身份验证算法</String>
+	<String ID="cipheralgorithm" loc.comment="Column Header for Wireless Auto Configuration Events Table">密码算法</String>
+	<String ID="onex" loc.comment="Column Header for Wireless Auto Configuration Events Table">OneX</String>
+	<String ID="wlansvcconnectfailed" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务连接失败</String>
+	<String ID="wlansvcdisconnect" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务断开连接</String>
+	<String ID="wlansvcstop" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务停止</String>
+	<String ID="wlansvcfailure" loc.comment="Table Name for Wireless Auto Configuration Events Table">Wlan 服务失败</String>
+	<String ID="errorcode" loc.comment="Column Header for Wireless Auto Configuration Events Table">错误代码</String>
+	<String ID="exthoststartfailure" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展主机启动失败</String>
+	<String ID="extensiblemodulepath" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展模块路径</String>
+	<String ID="exthoststartsuccess" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展主机启动成功</String>
+	<String ID="exthoststopped" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展主机停止</String>
+	<String ID="exthoststoppedunexpectedly" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展主机意外停止</String>
+	<String ID="exthosttimedout" loc.comment="Table Name for Wireless Auto Configuration Events Table">可扩展主机超时</String>
+	<String ID="msmassociationstart" loc.comment="Table Name for Wireless Auto Configuration Events Table">MSM 关联启动</String>
+	<String ID="adapter" loc.comment="Column Header for Wireless Auto Configuration Events Table">适配器</String>
+	<String ID="deviceguid" loc.comment="Column Header for Wireless Auto Configuration Events Table">设备 GUID</String>
+	<String ID="auth" loc.comment="Column Header for Wireless Auto Configuration Events Table">身份验证</String>
+	<String ID="cipher" loc.comment="Column Header for Wireless Auto Configuration Events Table">密码</String>
+	<String ID="msmassociationsuccess" loc.comment="Table Name for Wireless Auto Configuration Events Table">MSM 关联成功</String>
+	<String ID="peermac" loc.comment="Column Header for Wireless Auto Configuration Events Table">对等机 MAC 地址</String>
+	<String ID="failurereason" loc.comment="Column Header for Wireless Auto Configuration Events Table">失败原因</String>
+	<String ID="msmassociationfailure" loc.comment="Table Name for Wireless Auto Configuration Events Table">MSM 关联失败</String>
+	<String ID="wlansecstart" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全启动</String>
+	<String ID="wlansecsuccess" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全成功</String>
+	<String ID="wlansecfailure" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全失败</String>
+	<String ID="result" loc.comment="Column Header for Wireless Auto Configuration Events Table">结果</String>
+	<String ID="localmac" loc.comment="Column Header for Wireless Auto Configuration Events Table">本机 MAC</String>
+	<String ID="identity" loc.comment="Column Header for Wireless Auto Configuration Events Table">标识</String>
+	<String ID="user" loc.comment="Column Header for Wireless Auto Configuration Events Table">用户</String>
+	<String ID="domain" loc.comment="Column Header for Wireless Auto Configuration Events Table">域</String>
+	<String ID="reasoncode" loc.comment="Column Header for Wireless Auto Configuration Events Table">原因代码</String>
+	<String ID="reasontext" loc.comment="Column Header for Wireless Auto Configuration Events Table">原因文本</String>
+	<String ID="wlanseconexstart" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全 OneX 启动</String>
+	<String ID="wlanseconexsuccess" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全 OneX 成功</String>
+	<String ID="wlanseconexfailure" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 安全 OneX 失败</String>
+	<String ID="authval" loc.comment="Column Header for Wireless Auto Configuration Events Table">身份验证算法值</String>
+	<String ID="cipherval" loc.comment="Column Header for Wireless Auto Configuration Events Table">密码算法值</String>
+	<String ID="onexenabled" loc.comment="Column Header for Wireless Auto Configuration Events Table">OneX</String>
+	<String ID="eaptype" loc.comment="Column Header for Wireless Auto Configuration Events Table">EAP 类型</String>
+	<String ID="vendorid" loc.comment="Column Header for Wireless Auto Configuration Events Table">供应商 ID</String>
+	<String ID="vendortype" loc.comment="Column Header for Wireless Auto Configuration Events Table">供应商类型</String>
+	<String ID="authorid" loc.comment="Column Header for Wireless Auto Configuration Events Table">作者 ID</String>
+	<String ID="wlansvcprelogonbegin" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 服务预登录开始</String>
+	<String ID="requestedfields" loc.comment="Column Header for Wireless Auto Configuration Events Table">必填字段</String>
+	<String ID="wlansvcpostlogonbegin" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 服务登录后开始</String>
+	<String ID="wlansvcpostlogonconnection" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 服务登录后连接</String>
+	<String ID="wlansvcprelogonskip" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 服务预登录跳过</String>
+	<String ID="reason" loc.comment="Column Header for Wireless Auto Configuration Events Table">原因</String>
+	<String ID="wlansvcpostlogonskip" loc.comment="Table Name for Wireless Auto Configuration Events Table">WLAN 服务登录后跳过</String>
+</StringTable>
